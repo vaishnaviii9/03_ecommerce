@@ -126,6 +126,19 @@ h1, h2 {
   display: none;
 }
 
+/* Add this CSS to your stylesheet */
+button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff1a1a;
+}
 /* Responsive styling for mobile devices */
 @media (max-width: 500px) {
   .container {

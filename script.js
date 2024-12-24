@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const checkOutBtn = document.getElementById('checkout-btn')
     const cart =[]
 
-    const products = [
+    const products = JSON.parse(localStorage.getItem('product'))||[
     {
         id: 1,
         name: "Wireless Headphones",
@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         cart.push(product)
         // console.log(cart);
         renderCart()
+        saveProd()
         
     }
     function renderCart(){
@@ -89,6 +90,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 const cartItem= document.createElement('div')
                 cartItem.innerHTML =`
                 <span>${item.name} - $${item.price.toFixed(2)} </span>
+                <button data-index='${index}'> Remove </button>
                 `
                 cartItems.appendChild(cartItem)
                 totalPriceDisplay.textContent = `$${totalPrice.toFixed(2)}`
@@ -96,14 +98,28 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
         else{
             emptyCartMessage.classList.remove('hidden')
+            cartTotal.classList.add('hidden')
             totalPriceDisplay.textContent=`$0.00`
         }
     }
 
+    cartItems.addEventListener('click', (e)=>{
+        if(e.target.tagName === 'BUTTON'){
+            const itemIndex =parseInt(e.target.getAttribute('data-index'))
+            cart.splice(itemIndex,1)
+            renderCart()
+            saveProd()
+        }
+    })
+
     checkOutBtn.addEventListener('click', ()=>{
-        
+        saveProd()
         cart.length=0
         alert("CHECKOUT SUCCESSFULLY...")
         renderCart()
     })
+
+    function saveProd(){
+        localStorage.setItem('cart', JSON.stringify(cart))
+    }
 })
